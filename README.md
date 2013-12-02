@@ -12,26 +12,35 @@ on an Intel Core i7 920 @ 2.67 GHz with 6GB RAM.
 
 ##HOW TO INSTALL AND RUN:
 
-Simply unzip this archive into a folder and open the kyrala_l folder
-and double click "snowflake.exe" to run it.
+Simply right-click [snowflake.exe](http://coldnebo.github.io/snowflake/snowflake.exe) and 
+download the file and run it.
 
-(After the class and when this has been posted, I may post this project to my
-github account.  See https://github.com/coldnebo for updates.)
+You can also build the executable yourself from source by following the instructions below.
 
 ##HOW TO COMPILE:
 
 You will need the Cinder libraries and headers in order to compile this
 project.  
 
-If you are a TF, please see the cinder-dist.zip that I've uploaded to
-the dropbox.  Download this and extract it to the kyrala_l folder so that you
-see the following directory structure:
+Create the following directory structure:
+
+    kyrala_l/
+      cinder_dist/
+      
+Then:
+
+    $ cd kyrala_l
+    $ git clone https://github.com/coldnebo/snowflake
+
+Alternatively you can download and extract the [snowflake-project.zip](http://coldnebo.github.io/snowflake/snowflake-project.zip) if you don't want to use git.  Note: this zip was built at the time of the project submission and won't contain later modifications, so you should consider git.
+
+Now you should have:
 
     kyrala_l/
       cinder_dist/
       snowflake/
-  
-If you are seeing this file after the class, then please go to http://libcinder.org/
+
+Then, please go to http://libcinder.org/
 and download Cinder for Visual C++ 2010.  (This project was compiled against
 Cinder version 0.8.2).  You will either a) need to extract and rename the 
 folder to "cinder_dist", or b) change references of cinder_dist to "cinder_0.8.2_vc2010"
