@@ -1,16 +1,16 @@
 
-#OVERVIEW:
+##OVERVIEW:
 
 Please see the main project website at http://coldnebo.github.io/snowflake
 
-#REQUIREMENTS:
+##REQUIREMENTS:
 
 * Windows 7 (32-bit).
 * OpenGL capable card; minumum GLSL 1.20.  
 * Developed on Windows 7 64-bit / EVGA NVIDIA GTX 260 (896MB) running 
 on an Intel Core i7 920 @ 2.67 GHz with 6GB RAM.
 
-#HOW TO INSTALL AND RUN:
+##HOW TO INSTALL AND RUN:
 
 Simply unzip this archive into a folder and open the kyrala_l folder
 and double click "snowflake.exe" to run it.
@@ -18,7 +18,7 @@ and double click "snowflake.exe" to run it.
 (After the class and when this has been posted, I may post this project to my
 github account.  See https://github.com/coldnebo for updates.)
 
-#HOW TO COMPILE:
+##HOW TO COMPILE:
 
 You will need the Cinder libraries and headers in order to compile this
 project.  
@@ -46,7 +46,7 @@ run it or debug it in place.
 Cinder supports this... you might need to download the other package for Cinder instead.)
 
 
-#USERS GUIDE:
+##USERS GUIDE:
 
     keys:
       ESC                 - quit
