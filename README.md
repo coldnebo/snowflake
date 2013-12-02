@@ -1,2 +1,2 @@
 
-Please see the main project website at https://coldnebo.github.io/snowflake
+Please see the main project website at http://coldnebo.github.io/snowflake
