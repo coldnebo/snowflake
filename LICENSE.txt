@@ -1,6 +1,11 @@
+======================================================================
+LICENSES:
+
+Please read the full README.txt at 
+http://coldnebo.github.io/snowflake/README.txt for addtional context.
+
 Except where otherwise noted, this program is released under BSD 
-license.  (Please see README.txt for more information on licenses 
-involved in this project.)
+license:
 
 Copyright (c) 2010, Larry Kyrala
 All rights reserved.
@@ -31,3 +36,60 @@ AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY 
 WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 POSSIBILITY OF SUCH DAMAGE.
+
+----------------------------------------------------------------------
+Cinder 0.8.2  
+http://libcinder.org
+
+Cinder is a peer-reviewed, free, open source C++ library for creative 
+coding. Cinder supports Mac OS X, Windows and iOS-based devices. It 
+requires XCode 3.1 or later on the Mac, and Visual C++ 2008 or 2010 
+on Windows.
+
+Cinder is released under the Modified BSD License.
+(http://www.oss-watch.ac.uk/resources/modbsd.xml)
+
+----------------------------------------------------------------------
+Portions of the snowflake GLSL shader were adapted from the resources 
+and HLSL code contained in the NVIDIA SDK 9.52 Code Sample "Thinfilm":
+http://developer.download.nvidia.com/SDK/9.5/Samples/samples.html#glsl_thinfilm
+
+"This code is released free of charge for use in derivative works, 
+whether academic, commercial, or personal. (Full License)"
+http://developer.download.nvidia.com/licenses/general_license.txt
+
+----------------------------------------------------------------------
+SnowCrystals.com
+http://www.its.caltech.edu/~atomic/snowcrystals/
+
+Some textures in this program are derived from copyrighted pictures
+on "SnowCrystals.com" by Kenneth Libbrecht of Caltech:
+
+"Personal Uses:  If you want to use anything on this website for some 
+small personal use -- something that does not involve publication -- 
+then go ahead.  This includes book reports, presentations, class 
+projects, personal Christmas cards, etc.  Please include a reference 
+to to SnowCrystals.com whenever possible."
+(http://www.its.caltech.edu/~atomic/snowcrystals/copyright/copyright.htm)
+
+----------------------------------------------------------------------
+Cubemap Texture "Vindelälven" courtesy of Emil Persson "Humus".
+http://www.humus.name/index.php?page=Textures&ID=72
+
+Author
+
+This is the work of Emil Persson, aka Humus.
+http://www.humus.name
+humus@comhem.se
+
+Legal stuff
+
+This work is free and may be used by anyone for any purpose
+and may be distributed freely to anyone using any distribution
+media or distribution method as long as this file is included.
+Distribution without this file is allowed if it's distributed
+with free non-commercial software; however, fair credit of the
+original author is expected.
+Any commercial distribution of this software requires the written
+approval of Emil Persson.
+
