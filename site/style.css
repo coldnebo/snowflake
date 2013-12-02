@@ -1,0 +1,125 @@
+
+
+
+body {
+	margin: 0 auto;
+	padding: 22px 0;
+	width: 940px;
+	font: 13px Helvetica, Arial, sans-serif;
+	background: #F0F0F0;
+  background-image:url('flakes.jpg');
+  background-repeat:no-repeat;
+  background-position: right top;
+}
+
+h1, h2 {
+margin-bottom: 0;
+}
+h2 {
+border-top: 1px solid #ccc;
+margin-top: 2em;
+}
+
+p {
+margin-top: 0;
+}
+
+p.note { 
+font-family: "Times New Roman", Times, serif;
+font-style: italic; 
+color: #888;
+}
+
+p.note.strong {
+color: #000;
+}
+
+div.stanza {
+white-space: pre;
+text-align: right;
+}
+
+p.reference {
+font-size: 12px;
+font-family: "Courier New", Courier, monospace;
+text-indent: -4em;
+padding-left: 4em;
+}
+p.reference span.source {
+text-decoration: underline;
+}
+p.reference a:link, a:visited {
+color: #000;
+text-decoration: none;
+}
+p.reference a:hover {
+color: #000;
+text-decoration: underline;
+}
+
+div.image {
+float: left;
+margin-right: 1em;
+margin-bottom: 1em;
+}
+
+img {
+float:right;
+margin: 1em;
+}
+
+li {
+padding-bottom: .5em;
+}
+
+div.menu {
+  float: right;
+  font-variant: small-caps;
+  color: #999;
+}
+div.menu ul {
+  padding: 0;
+  margin: 0; 
+}
+
+div.menu a:link, a:visited {
+color: #666;
+text-decoration: none;
+}
+div.menu a:hover {
+color: #000;
+text-decoration: underline;
+}
+
+div.menu > ul > li {
+  font-weight: bold;
+/*  position: relative;
+  top:-1em;
+  left: 1em; */
+}
+
+
+div.menu ul, div.menu li {
+  display: inline;
+  list-style-type: none;
+  padding-right: 20px;
+}
+
+div.filemenu ul li {
+  list-style-type: none;
+}
+div.filemenu a {
+text-decoration: none;
+}
+
+div.filemenu a:hover {
+color: #000;
+font-weight: bold;
+}
+
+div.filemenu img {
+  float: none;
+  vertical-align:middle;
+}
+
+dt { font-weight: bold; }

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Snowflake - Final Report</title>
+  <link rel="stylesheet" href="site/style.css" type="text/css"/>
+</head>
+<body>
+
+
+<div class="stanza">
+<b>Final Project</b> by Larry Kyrala for
+CS 175: Introduction to Computer Graphics
+Professor: Hanspeter Pfister
+Harvard University
+Fall 2010
+</div>
+
+
+<h1>Snowflake</h1>
+<p class="note strong">a snowflake simulator</p>
+
+
+<div class="menu">
+<ul>
+  <li><a href="#description">Description</a></li>
+  <ul>
+    <li><a href="#controls">Controls</a></li>
+    <li><a href="#features">Features</a></li>
+  </ul>
+  <li><a href="#implementation">Implementation</a></li>
+  <ul>
+    <li><a href="#storyboard">Storyboard</a></li>
+    <li><a href="#code">Code</a></li>
+    <li><a href="#media">Media</a></li>
+    <li><a href="#experience">Experience</a></li>
+  </ul>
+  <li><a href="#references">References</a></li>
+</ul>
+</div>
+
+<a name="description"/>
+<h2>Description</h2>
+<p class="note">What exactly are you planning to implement? What is the 
+basic functionality of your application? Which extensions will you consider?
+Be as specific as possible. Bullets are fine &mdash; you should order the 
+features of your program in terms of importance (most important 
+feature first, etc.)</p>
+
+<div class="image"><a href="http://www.its.caltech.edu/~atomic/snowcrystals/movies/movie3a.gif"><img src="http://www.its.caltech.edu/~atomic/snowcrystals/movies/x2-s.jpg"/></a></div>
+<p>Kenneth Libbrecht at CalTech has done some amazing research on the physics 
+of snowflake formation.  The image to the left links to an animated gif showing 
+time-lapse photography of a lab-grown snowlake.</p>
+<p>Since viewing the formation of snowflakes in the wild isn't possible currently,
+I thought an interesting graphics project would be to simulate the growth of 
+snowflakes as they fall.</p>
+
+<br clear="all"/>
+
+<a name="controls"/>
+<h3>Controls</h3>
+
+<pre>
+keys:
+  ESC                 - quit
+  0   zero            - cycle through 5 "real life" snowflakes
+  
+  1-5                 - various procedural generators. (described in html)
+  
+  1                   - 'flower' generator.
+  2                   - 'mosaic' generator.
+  3                   - 'lineart' generator.
+  4                   - 'outside-in (sushi-roll) lineart' generator
+  5                   - 'random barycentric triple' generator
+  
+  R                   - reset generator
+  
+  A                   - 'auto' camera; smooth rotation around snowflake
+  
+  []  square brackets - adjust polarization
+  <>  angle brackets  - adjust spectrum bias for polarization
+  -=  minus/equals    - adjust thickness of interface/refraction factor
+
+mouse:
+  LEFT MOUSE DRAG   - rotate the camera
+  RIGHT MOUSE DRAG  - rotate the snowflake
+  MOUSE WHEEL       - zoom in/out on snowflake
+</pre>
+
+
+<a name="features"/>
+<h3>Features</h3>
+<ul>
+<li>camera is centered on the snowflake's frame as it forms. 
+<img src="http://www.its.caltech.edu/~atomic/snowcrystals/photos/w031224a130.jpg" width="100px"/></li>
+<li>pressing number keys allow the viewer to switch between generators and real-life snowflakes 
+(from <a href="http://www.its.caltech.edu/~atomic/snowcrystals/">SnowCrystals.com</a>)-- 
+generated snowflakes are random on two parameters and are different each time they are 
+regenerated.  There are 5 different generators with varying levels of randomization (no two are the same -- mostly!):
+<ol>
+<li>'flower' - the basis for this generator are rects of sine modulated size that sweep outwards.
+the effect is like a colorful flower.</li>
+<li>'mosaic' - this also uses sweeping rects, however this time the radial position is 
+modulated so that a mosaic is formed.</li>
+<li>'lineart' - this uses two lines of adjacent symmetry which are then connected each to the 
+midpoint of the other as they expand radially.  The connection idea was derived from 
+patterns common in peg-based lineart.</li>
+<li>'outside-in (sushi-roll) lineart' - similar to 'lineart', this reuses the modulated 
+radial expansion in reverse, drawing outside in, and creating fractal like hubs.</li>
+<li>'random barycentric triple' - taking two lines of adjacent symmetry as basis vectors, 
+3 additional points are constructed using barycentric coordinates. Since the additional points
+are random points within the radially expanding triangle, this produces different and more
+complex patterns than 'lineart'.</li>
+</ol>
+</li>
+<li>"thin-film"/polarized light shading effects -- Rotating the snowflake with respect to the 
+light source produces effects characteristic of thin films. Libbrecht finds that using a color filter (polarized light) (see the section on 
+<a href="http://www.its.caltech.edu/~atomic/snowcrystals/photo2/photo2.htm">"Illumination Techniques"</a>) 
+brings out the best contrast in 
+his photos.  This is a form of <a href="http://en.wikipedia.org/wiki/Thin-film_interference">thin-film interference</a>
+as the surfaces of the snowflake are accented by the polarized filter
+(see nvidia's <a href="http://developer.download.nvidia.com/shaderlibrary/webpages/screenshots/shaders/ThinFilm.html">thinfilm</a> shader or
+<a href="http://www.flickr.com/photos/46428224@N03/with/4321396047/">photographs of real crystals via polarized light microscopy</a>).
+<img src="site/tf1.png" width="200px"/>
+<img src="site/tf2.png" width="200px"/>
+
+</li>
+<br clear="all"/>
+<li>
+<img src="http://www.its.caltech.edu/~atomic/snowcrystals/primer/morphologydiagram.jpg" width="200px"/>
+
+<p>generative growth simulation -- 
+
+Libbrecht describes the physics of snowflake formation based on diffusion 
+dynamics within environmental parameters of temperature and humidity.  Using 
+the physics to approximate growth is a difficult problem and still not well 
+understood [Libbrecht, Kim]. Unfortunately I was not able to get my diffusion 
+simulation working in the time alloted, so I included a sampling of 
+"real-life" snowflake textures derived from Libbrecht's galleries (see Media and references
+below).</p>
+<p>I was able to implement several procedural generators using up to three 
+random parameters.  This randomness allows successive runs of the generators to 
+produce unique flakes.  These generators are artistic -- they don't follow ice symmetry or
+hold to realistic physical concepts of crystal formation.</p>
+<p>I've made some simplifying assumptions in designing the generators:
+<ul>
+<li>I use an accumlution buffer (2d texture) to store the integration.</li>
+<li>the 2d texture is then translated into geometry via a vertex shader.</li>
+</ul></p>
+</li>
+<li>for added realism, the snowflake is placed in 
+an environment built from this skybox: <a href="http://www.humus.name/index.php?page=Textures&ID=72"><img src="http://www.humus.name/Textures/Vindelalven.jpg" width="100px"/></a></li>
+<br clear="all"/>
+<li>I've also added a snowflake particle system for 
+background effect.</li>
+<li>(not implemented) if there are distant lights, such as the sun, a snow halo and/or bloom effect (GLSL?)
+would be nice. <img src="site/snow-halo.jpg" width="100px"/></li>
+</ul>
+
+<br clear="all"/>
+
+<a name="implementation"/>
+<h2>Implementation</h2>
+
+<a name="storyboard"/>
+<h3>Original Storyboard and Concept</h3>
+
+<img src="site/concept-sketches.png" width="65%"/>
+<p>Frames:</p>
+<ol>
+<li>(not implemented) The scene starts out with a lone lamp at a country path with snow drifts (the scene
+is surrounded with an environment map like the one above).</li>
+<li>Overlayed on this is a 3D partical system of snow falling at normal speed 
+(sprites or fuzzy points) and (not implemented) title graphics</li>
+<li>(partially implemented) pressing a key focuses on a single point and time slows to microseconds so you can
+see the flake form from the point... the background is a diffuse gradient blend in order
+to see the polarization effects.</li>
+<li>(implemented as 3 random params, but no controls) also available are 
+temperature and humidity controls. varying these has an effect on 
+what kind of flakes form, or the formation of existing flakes.</li>
+<li>(different controls) arrow keys flip to another (new) flake, leaving the old one.</li>
+<li>(not implemnted) user can also zoom out and see the flake fall to the ground, then hold on a 
+long shot until the next flake zoom.</li>
+</ol>
+
+<p>Image References:</p>
+<ul>
+<li><a href="http://www.masterfile.com/stock-photography/image/600-00061257/Street-Lamp-in-Snow">lamp in snow</a></li>
+<li><a href="http://www.shutterstock.com/pic-6832684/stock-photo-solitary-lamppost-trying-to-shine-its-yellow-light-into-a-freezing-cold-world-of-snow.html">lamp post</a></li>
+</ul>
+
+<p>OBJ file (courtesy of my sister Andrea who is an animator)</p>
+<ul>
+<li><a href="site/lamppost_0006.obj"><img src="site/lamppost_0006.jpg" width="150" title="lamppost_0006.obj"/></a> 
+(not implemented) This would need to be textured and placed in the scene.</li>
+</ul>
+
+
+<br clear="all"/>
+
+<a name="code"/>
+<h3>Code</h3>
+
+
+<h4>About the FBO textures</h4>
+<p>All snowflake generators are shapes rendered into an offscreen frame buffer object
+in GL_BLEND mode, and as such they accumulate any primatives rendered to the surface.
+Because the accumulated buffer is interpreted as a heightfield, these shapes also have
+depth.</p>
+
+<img src="site/tf3.png" width="200px"/>
+<p>The generators have a prebuilt limit on the number of frames they are allowed to 
+"grow".  This is normalized in frame time to a range from 0 - 1.0 which then is used
+to define the radius of growth at a given frame time.  This radius may then be multiplied
+times any of the random parameters, modulated, or otherwise transformed.  In addition,
+a random number for the symmetry is chosen and any frame draw operations are rotated and 
+repeated along these lines to produce a symmetrical effect.
+</p>
+
+<p>I attempted another kind of generator using a Laplacian convolution filter 
+(edge detection filter) under the idea that recursive applications of this filter 
+would "grow" the edge of the snowflake.  Indeed, I found out later that Laplacians 
+are involved in actual diffusion physics, so this might have been a good 
+approximation.  I was planning to use this in combination with a hexagonal bias 
+(like a lens flare) to encourage growth along symmetry lines.  Although there are many
+examples of GLSL convolution filters, I couldn't get the shader to work in my specific 
+context in time. Something for the future.</p>
+
+
+<h4>About the GLSL snowflake shader</h4>
+<img src="site/tf4.png" width="200px"/>
+<p>The snowflake GLSL shader does a combination of interesting things to achieve
+its effect.</p>
+<ul>
+<li>thickness is obtained from a greyscale frame buffer object (FBO) generated heightmap.</li>
+<li>thickenss is used for both the refraction effect and the thinfilm specular component.</li>
+<li>the "eta" (n1/n2) ratios for the index of refraction vary from 0.76 (ice) to 0.96 (almost air)
+based on the thickness.</li>
+<li>the refracted cubemap texel is blended with a non-refracted cubemap texel for thickness 
+levels below a certain range... this cuts down on edge aliasing and gives a smoother image.</li>
+<li>the shader discards anywhere thickness = 0, this "cuts out" the 
+snowflake from the square texture plate.</li>
+<li>a contrast enhance feature was added based on camera distance. far away, the flake is 
+darkened a little and the surroundings are brightened a little.  zooming in, this is reversed
+so that you can see the flake in better detail.</li>
+</ul>
+
+<h4>About the background snow flurry particle system</h4>
+<p>Snow particles use GL_POINTS along with the linear + exponential ATTENUATION parameter to generate
+larger points closer to the camera and smaller dots farther away.  The particles have a downward 
+impulse so they fall, and a xz impulse from a 
+<a href="http://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a> texture to 
+simulate drifts and 
+turbulence.  I got the Perlin noise idea from Robert Hodgins particle system sample in the 
+Cinder SDK.  It's a simple precached way of generating psuedo turblence without CFDs.</p>
+
+<h4>About the controls and UI paradigm</h4>
+<p>The mouse controls for the camera rotation and object rotation are what I call a "ball on
+paper" model of interaction.  Imagine a ball that has a center fixed in space that can rotate 
+but not move.  Now imagine that this ball rests on a sheet of paper on a desk.  Moving your 
+mouse on the screen (x,y) with a button down is akin to moving the paper.  Moving the paper
+would rotate the ball about it's center.</p>
+
+<p>This has a couple advantages over other approaches, such as "trackball" quaternion 
+controls or raw euler angles:</p>
+<ul>
+<li>unlike "trackball" controls, it is possible to return <em>exactly</em> to a given orientation by
+simply returning to the same spot... this isn't possible in RenderMonkey or many other 
+"trackball" implementations, which are very difficult to rotate and keep level at the 
+same time.</li>
+<li>the "sheet of paper" is infinite, meaning that you can click, drag, release, and click again.
+This allows a long rotation to be broken up into smaller click-drag events, while still 
+keeping an intuitive continuity.</li>
+<li>although euler angles are used in the implementation of this control system, 
+the system itself avoids the common problem of gimbal lock by always maintaining a clean
+mapping between x and y accumulators.  In the case of object rotation, the y axis rotation may
+not always be respective to the screen, but I thought this was a small price to pay for 
+the overall consistency and simplicity of this approach.</li>
+</ul>
+
+<a name="media"/>
+<h3>Media</h3>
+
+
+<p>The "real-life" snowflakes were produced via the following process using <a href="http://www.gimp.org/">GIMP</a>:</p>
+<img src="snowflake/resources/rl_snowflake_1.png" width="100px"/>
+<img src="snowflake/resources/rl_snowflake_2.png" width="100px"/>
+<img src="snowflake/resources/rl_snowflake_3.png" width="100px"/>
+<img src="snowflake/resources/rl_snowflake_4.png" width="100px"/>
+<img src="snowflake/resources/rl_snowflake_5.png" width="100px"/>
+<ol>
+<li>stock image selected from Libbrecht's collection</li>
+<li>resize to 512x512</li>
+<li>created a mask layer</li>
+<li>desaturate: lightness</li>
+<li>color: invert</li>
+<li>levels: gamma = 0.35</li>
+<li>brightness: +40</li>
+<li>selective gaussian blur: 5.0 radius, 5 max delta.</li>
+</ol>
+<br clear="all"/>
+
+
+<a name="experience"/>
+<h3>Experience</h3>
+<p class="note">
+Your level of experience or knowledge of the application area and 
+the type of development / languages / toolkits you think will be 
+required. Add a description of the responsibilities of each team 
+member (or add their name to each feature bullet). 
+</p>
+
+<dl>
+<dt>Experience:</dt> <dd>veteran multimedia systems and application programmer. (C++/Win32)</dd>
+
+<dt>Target platform:</dt> <dd>Windows 7 VS2010 C++  32/64 bit</dd>
+<dt>Libraries:</dt> <dd>
+<ul><li><a href="http://libcinder.org/">Cinder C++</a> - a C++ library for creative coding; provides a lot of the
+"plumbing" needed for a typical OpenGL project.  More modern than GLUT; cross platform 
+support.</li>
+<li>For other media and asset licenses please see the included 
+<a href="README.txt">README.txt</a> file.</li>
+<li>Also I reused concepts and code from our homeworks.  </li>
+</ul>
+</dd>
+</dl>
+<ul>
+<li>This is a solo project because I'm an extension student.</li>
+<li>The features are laid out such that if I can't do one thing, I can fallback to 
+another... so the scope of this can expand or contract as needed.</li>
+</ul>
+
+<a name="references"/>
+<h2>References</h2>
+<br/>
+<p class="reference"> 
+<span class="author">Kim, Theodore, Micheal Henson, and Ming C. Lin.</span>
+<span class="title">"A Hybrid Algorithm for Modeling Ice Formation."</span>
+<span class="sponsor">UNC at Chapel Hill</span>.
+<span class="date">28 Nov. 2010.</span>
+<span class="link">&lt;<a href="http://gamma.cs.unc.edu/HYBICE/">http://gamma.cs.unc.edu/HYBICE/</a>&gt;.</span>
+</p>
+
+<p class="reference"> 
+<span class="author">Libbrecht, Kenneth.</span>
+<span class="source">SnowCrystals.com</span>.
+<span class="sponsor">CalTech.</span>
+<span class="date">28 Oct. 2010.</span>
+<span class="link">&lt;<a href="http://www.its.caltech.edu/~atomic/snowcrystals/">http://www.its.caltech.edu/~atomic/snowcrystals/</a>&gt;.</span>
+</p>
+<p class="reference"> 
+<span class="author">---.</span>
+<span class="title">"The physics of snow crystals."</span>
+<span class="source">Reports on Progress in Physics</span>.
+68 (2005) 855-895.
+<span class="link">&lt;<a href="http://www.its.caltech.edu/~atomic/publist/rpp5_4_R03.pdf">http://www.its.caltech.edu/~atomic/publist/rpp5_4_R03.pdf</a>&gt;.</span>
+</p>
+
+
+
+
+<p class="reference">
+Wikipedia contributors, 'Procedural modeling',  <i>Wikipedia, The Free Encyclopedia,</i> 4 August 2010, 01:29 UTC, &lt;<a href="http://en.wikipedia.org/w/index.php?title=Procedural_modeling&amp;oldid=377040651" class="external free" rel="nofollow">http://en.wikipedia.org/w/index.php?title=Procedural_modeling&amp;oldid=377040651</a>&gt; [accessed 28 October 2010]
+</p>
+<p class="reference">
+---, 'Thin-film interference',  <i>Wikipedia, The Free Encyclopedia,</i> 29 September 2010, 02:33 UTC, &lt;<a href="http://en.wikipedia.org/w/index.php?title=Thin-film_interference&amp;oldid=387652589" class="external free" rel="nofollow">http://en.wikipedia.org/w/index.php?title=Thin-film_interference&amp;oldid=387652589</a>&gt; [accessed 28 October 2010]
+</p>
+
+
+
+</ul>
+
+
+
+</body>
+</html>
