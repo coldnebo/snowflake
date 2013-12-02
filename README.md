@@ -12,8 +12,7 @@ on an Intel Core i7 920 @ 2.67 GHz with 6GB RAM.
 
 ##HOW TO INSTALL AND RUN:
 
-Simply right-click [snowflake.exe](http://coldnebo.github.io/snowflake/snowflake.exe) and 
-download the file and run it.
+Simply download [snowflake.exe](http://coldnebo.github.io/snowflake/snowflake.exe) and run it.
 
 You can also build the executable yourself from source by following the instructions below.
 
